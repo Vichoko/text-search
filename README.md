@@ -3,7 +3,7 @@
 
 
 ### 1. Pre-procesamiento del texto
-Se utilizaran textos de lenguaje natural. 
+Se utilizaran textos de lenguaje natural en ingles. 
 Para lo cual se recibe el archivo de texto de entrada, 
 se hacen las siguientes tareas:
 1. Eliminar saltos de linea.
