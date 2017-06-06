@@ -1,6 +1,6 @@
 package test;
 
-import algorithm.Preprocess;
+import utils.Preprocess;
 
 import java.io.IOException;
 
