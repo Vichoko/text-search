@@ -17,10 +17,11 @@ public class StateTransitionFunction {
     }
 
     /**
-     * wraps the object instantiation-.
-     * @param q current state
-     * @param a current character
-     * @param p next state
+     * Simplifica la definicion de transiciones para estados como int y caracteres como char.
+     *
+     * @param q int que codifica estado actual
+     * @param a char que codifica caracter actual
+     * @param p int que codifica estado siguiente
      */
     public void easy_set_transition(int q, char a, int p) {
         m_hashMap.put(
