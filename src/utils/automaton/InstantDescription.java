@@ -1,13 +1,13 @@
 package utils.automaton;
 
 /**
- * Un par (q,e), donde q es un State y e es un Character
+ * Un par (q,e), donde q es un State y e es un AFDCharacter
  */
 public class InstantDescription {
     private State m_state;
-    private Character m_character;
+    private AFDCharacter m_character;
 
-    public InstantDescription(State s, Character c) {
+    public InstantDescription(State s, AFDCharacter c) {
         set_state(s);
         set_character(c);
     }
@@ -16,7 +16,7 @@ public class InstantDescription {
         return m_state;
     }
 
-    public Character get_character() {
+    public AFDCharacter get_character() {
         return m_character;
     }
 
@@ -25,7 +25,7 @@ public class InstantDescription {
     }
 
 
-    private void set_character(Character m_character) {
+    private void set_character(AFDCharacter m_character) {
         this.m_character = m_character;
     }
 

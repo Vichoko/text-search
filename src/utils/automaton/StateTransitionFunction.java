@@ -25,11 +25,11 @@ public class StateTransitionFunction {
      */
     public void easy_set_transition(int q, char a, int p) {
         m_hashMap.put(
-                new InstantDescription(new State(q), new Character(a)),
+                new InstantDescription(new State(q), new AFDCharacter(a)),
                 new State(p));
     }
 
-    State get_nextState(InstantDescription i) {
+    public State get_nextState(InstantDescription i) {
         return m_hashMap.get(i);
     }
 }

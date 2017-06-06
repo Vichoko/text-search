@@ -3,10 +3,10 @@ package utils.automaton;
 /**
  * Caracter del alfabeto, en este caso un char nativo.
  */
-public class Character {
+public class AFDCharacter {
     private char m_character;
 
-    public Character(char c) {
+    public AFDCharacter(char c) {
         set_character(c);
     }
 
@@ -23,7 +23,7 @@ public class Character {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Character character = (Character) o;
+        AFDCharacter character = (AFDCharacter) o;
 
         return m_character == character.m_character;
     }

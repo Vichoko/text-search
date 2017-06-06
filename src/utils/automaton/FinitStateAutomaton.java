@@ -27,12 +27,34 @@ public class FinitStateAutomaton {
         for (char c : charArray){
             currentState = m_transitionFunction.get_nextState(
                     new InstantDescription(
-                        currentState,
-                        new Character(c)));
+                            currentState,
+                            new AFDCharacter(c)));
         }
 
         State finalState = currentState;
         return m_finalStates.contains(finalState);
+    }
+
+    public int run_n_count(String input){
+        int counter = 0;
+        char[] charArray = input.toCharArray();
+
+        // initial state
+        State currentState = m_initialState;
+        if (m_finalStates.contains(currentState)){
+            counter++;
+        }
+
+        for (char c : charArray){
+            currentState = m_transitionFunction.get_nextState(
+                    new InstantDescription(
+                            currentState,
+                            new AFDCharacter(c)));
+            if (m_finalStates.contains(currentState)){
+                counter++;
+            }
+        }
+        return counter;
     }
 }
 
