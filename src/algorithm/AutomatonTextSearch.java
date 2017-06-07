@@ -96,7 +96,7 @@ public class AutomatonTextSearch {
         long t1 = System.currentTimeMillis();
         CONSTRUCTION_TIME = t1 - t0;
         M = patternArray.length;
-        if (m_verbose) System.out.println("  done pattern length: " + M + " in " + CONSTRUCTION_TIME);
+        if (m_verbose) System.out.println("    done construction. Pattern length: " + M + " in " + CONSTRUCTION_TIME);
         m_afd = new FinitStateAutomaton(initialState, finalStates, m_transitionFunction);
     }
 
@@ -105,7 +105,7 @@ public class AutomatonTextSearch {
         int result = m_afd.run_n_count(m_fullText);
         long t1 = System.currentTimeMillis();
         SEARCH_TIME = t1 - t0;
-        if (m_verbose) System.out.println(" finished AFD run in " + SEARCH_TIME);
+        if (m_verbose) System.out.println("Finished AFD run in " + SEARCH_TIME);
         return result;
     }
 

@@ -45,7 +45,7 @@ la correctitud del algoritmo en comparación con el método de fuerza bruta.
 1. Instanciar clase ```AutomatonTextSearch(String fullText, String pattern)```; la cual construye el AFD
 para ```pattern```, basandose en el alfabeto descubierto de ```fulltext```.
 2. Llamar metodo del objeto ```Int AutomatonTextSearch.run()```; el cual retorna la cantidad de ocurrencias de 
-```pattern``` en ```fulltext````.
+```pattern``` en ```fulltext```.
 
 ##### Ejemplo
         Preprocess p = new Preprocess("source/2^21.txt");
