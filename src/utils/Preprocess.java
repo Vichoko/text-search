@@ -38,7 +38,7 @@ public class Preprocess {
         for(int i = 0; i < sampleSize; i++){
             wordSample[i] = wordArray[rand.nextInt(wordArray.length)];
         }
-        if (debug) System.out.println("takeSample:: source-words= "+sampleSize+", sample-words= "+wordArray.length);
+        if (debug) System.out.println("takeSample:: sample-words= "+sampleSize+", source-words= "+wordArray.length);
         return wordSample;
     }
     /**

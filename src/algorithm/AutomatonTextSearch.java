@@ -3,13 +3,16 @@ package algorithm;
 
 import utils.automaton.*;
 
+import static utils.Global.*;
+
+
 import java.util.ArrayList;
 import java.util.TreeSet;
 
-public class AutomatonTextSearch{
+
+public class AutomatonTextSearch {
     private String m_fullText;
     private String m_patternText;
-    private TreeSet<Character> m_alphabet;
     private StateTransitionFunction m_transitionFunction;
     private FinitStateAutomaton m_afd;
     private boolean m_verbose;
@@ -26,12 +29,11 @@ public class AutomatonTextSearch{
         m_fullText = fullText;
         m_patternText = pattern;
         char[] patternArray = pattern.toCharArray();
-        if (m_verbose) System.out.println("AutomatonTextSearch :: Making alphabet");
-        makeAlphabet(fullText.toCharArray());
-        if (m_verbose) System.out.println("  done.");
+
 
         // AFD Construction
-        if (m_verbose) System.out.println("AutomatonTextSearch :: Making AFD");
+        if (m_verbose) System.out.println("AutomatonTextSearch :: Constructing AFD");
+        long t0 = System.currentTimeMillis();
         State finalState = new State(patternArray.length);
         ArrayList<State> finalStates = new ArrayList<>();
         finalStates.add(finalState);
@@ -41,7 +43,7 @@ public class AutomatonTextSearch{
 
         // base case 1
         int q = 0;
-        for (char a : m_alphabet) {
+        for (char a : ALPHABET) {
             if (patternArray[q] == a) {
                 m_transitionFunction.easy_set_transition(q, a, q + 1);
             } else {
@@ -52,7 +54,7 @@ public class AutomatonTextSearch{
         if (patternArray.length > 1){
         //base case 2
         q = 1;
-        for (char a : m_alphabet) {
+        for (char a : ALPHABET) {
             if (patternArray[q] == a) {
                 m_transitionFunction.easy_set_transition(q, a, q + 1);
             } else {
@@ -64,12 +66,12 @@ public class AutomatonTextSearch{
             }
         }
 
-        // now i have all transitions from state 0 and 1.
-        AFDCache cache = new AFDCache(m_transitionFunction, patternArray);
+            // now i have all transitions from state 0 and 1.
+            AFDCache cache = new AFDCache(m_transitionFunction, patternArray);
 
         // iteration
         for (q = 2; q < patternArray.length; q++) {
-            for (char a : m_alphabet) {
+            for (char a : ALPHABET) {
                 if (patternArray[q] == a) {
                     m_transitionFunction.easy_set_transition(q, a, q + 1);
                 } else {
@@ -83,28 +85,28 @@ public class AutomatonTextSearch{
         }
         // final case
         q = patternArray.length;
-        for (char a : m_alphabet) {
+        for (char a : ALPHABET) {
             m_transitionFunction.set_transition(
                     new InstantDescription(new State(q), new AFDCharacter(a)),
                     m_transitionFunction.get_nextState(
                             new InstantDescription(cache.get(q - 1), new AFDCharacter(a))));
 
+            }
         }
-        }
-        if (m_verbose) System.out.println("  done.");
+        long t1 = System.currentTimeMillis();
+        CONSTRUCTION_TIME = t1 - t0;
+        M = patternArray.length;
+        if (m_verbose) System.out.println("  done pattern length: " + M + " in " + CONSTRUCTION_TIME);
         m_afd = new FinitStateAutomaton(initialState, finalStates, m_transitionFunction);
     }
 
     public int run() {
-        if (m_verbose) System.out.println("AutomatonTextSearch :: Running AFD...");
-        return m_afd.run_n_count(m_fullText);
-    }
-
-    private void makeAlphabet(char[] textAsArray) {
-        m_alphabet = new TreeSet<>();
-        for (char c : textAsArray) {
-            m_alphabet.add(c);
-        }
+        long t0 = System.currentTimeMillis();
+        int result = m_afd.run_n_count(m_fullText);
+        long t1 = System.currentTimeMillis();
+        SEARCH_TIME = t1 - t0;
+        if (m_verbose) System.out.println(" finished AFD run in " + SEARCH_TIME);
+        return result;
     }
 
 }
@@ -117,7 +119,8 @@ class AFDCache {
 
     /**
      * Cache mantiene valor de variable X (enunciado) tal que: X = sigma(...sigma(sigma(0, P[2]), P[3])..., P[q]).
-     * @param stf Referencia a funcion de transicion del automata en construccion
+     *
+     * @param stf     Referencia a funcion de transicion del automata en construccion
      * @param pattern Patron sobre el cual se construye el automata
      */
     AFDCache(StateTransitionFunction stf, char[] pattern) {
