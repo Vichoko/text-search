@@ -1,0 +1,1 @@
+Este directorio es para guardar los archivos de salida de los test.
