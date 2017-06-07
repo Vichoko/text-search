@@ -5,9 +5,7 @@ import utils.Preprocess;
 import utils.Triple;
 
 import java.io.File;
-import java.io.IOException;
 import java.io.PrintWriter;
-import java.time.Duration;
 import java.util.HashMap;
 
 import static utils.Global.*;
@@ -16,7 +14,7 @@ import static utils.Global.*;
 public class AutomatonTextSearchTest {
     public static void main(String[] args) throws Exception {
         //firstTest();
-        completeTest(true);
+        completeTest(false);
     }
     private static void completeTest(boolean verbose) throws Exception {
         File statisticsFile = new File("./results/automaton_test_results.txt");
@@ -42,11 +40,21 @@ public class AutomatonTextSearchTest {
             Preprocess p = new Preprocess(textFile);
             String fullText = p.clean();
             makeAlphabet(fullText.toCharArray(), verbose);
-            System.out.println("n: " + fullText.length());
+            System.out.println("n: " + fullText.length() + " = 2^" + Math.log(fullText.length())/Math.log(2));
             pw.println("n: " + fullText.length());
             String[] sample = Preprocess.takeSample(fullText, verbose);
+            int progressCounter = 0;
+            int stepCounter = 0;
+            int progressLimit = sample.length;
+            long deltaProgress = progressLimit/100;
+            System.out.print("Progress: "+progressCounter);
             for (String pattern : sample) {
                 if (pattern.length() < 3) continue;
+                stepCounter++;
+                if (stepCounter >= deltaProgress){
+                    System.out.print(++progressCounter);
+                    stepCounter = 0;
+                }
                 AutomatonTextSearch ats = new AutomatonTextSearch(fullText, pattern, verbose);
                 ats.run();
 
@@ -72,6 +80,7 @@ public class AutomatonTextSearchTest {
                 pw.println("m: " + m + ", construction_time: " + val.getFirst() + ", search_time: " + val.getSecond() + ", counter: " + val.getThird());
 
             }
+            System.out.println("");
             pw.println("");
             pw.flush();
         }
