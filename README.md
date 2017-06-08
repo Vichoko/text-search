@@ -23,6 +23,10 @@ Utilizando el método estático ```String[] Preprocess.takeSample(String source)
 una muestra de N/10 palabras aleatorias, con distribucion uniforme, del string fuente.
 
 **Observación:** Se debe tomar muestreo después de hacer la limpieza, i.e. correr el método clean.
+
+**Observación 2:** Se impuso un limite heuristico al tamaño de la muestra, tal que ejecutar la busqueda sobre todos 
+ellos no tarde más de 5 horas.
+
 ##### Uso
 1. Llamar al método estático ```Preprocess.takeSample(String cleanText)```, recibir el arreglo de palabras como retorno.
 
@@ -37,7 +41,13 @@ una muestra de N/10 palabras aleatorias, con distribucion uniforme, del string f
 Implementado en clase ```algorithm.AutomatonTextSearch```.
 
 Se puede ejecutar la clase ```test.AutomatonTextSearchTest``` para visualizar el funcionamiento de éste, y comparar el 
-la correctitud del algoritmo en comparación con el método de fuerza bruta.
+la correctitud del algoritmo en comparación con el método de fuerza bruta; al igual que para ejecutar los experimentos 
+propuestos en el informe.
+
+Ejecutar ```AutomatonTextSearchTest.acurracyTest``` para verificar que la busqueda encuentra todas las ocurrencias de diversos
+patrones.
+
+Ejecutar ```AutomatonTextSearchTest.completeTest``` para efectuar experimentos propuestos en el informe.
 
 **Observación**: El algoritmo supone un alfabeto ASCII, tanto para el patron como el texto fuente.
 
