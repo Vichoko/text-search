@@ -31,11 +31,17 @@ public class Preprocess {
     public static String[] takeSample(String source, boolean debug){
         String[] wordArray = source.split("\\s+");
         Random rand = new Random();
-
+        int charCounter = source.length();
         int sampleSize = wordArray.length/10;
         String[] wordSample = new String[sampleSize];
 
+        double limit = 14400/(charCounter*3e-8); // limite de samples para que se demore a lo mas 4 horas.
+
         for(int i = 0; i < sampleSize; i++){
+            if (i >= limit){
+                System.err.println("takeSample :: Sample size exceded heuristic limit, fixing it to finish in about 4 hours to " + limit);
+                break;
+            }
             wordSample[i] = wordArray[rand.nextInt(wordArray.length)];
         }
         if (debug) System.out.println("takeSample:: sample-words= "+sampleSize+", source-words= "+wordArray.length);
