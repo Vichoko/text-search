@@ -7,15 +7,7 @@ public class AFDCharacter {
     private char m_character;
 
     public AFDCharacter(char c) {
-        set_character(c);
-    }
-
-    public char get_character() {
-        return m_character;
-    }
-
-    private void set_character(char m_character) {
-        this.m_character = m_character;
+        this.m_character = c;
     }
 
     @Override

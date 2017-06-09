@@ -12,15 +12,31 @@ import static utils.Global.*;
 
 
 public class AutomatonTextSearchTest {
+    /**
+     * Decomentar primera y comentar la segunda para comprobar exactitud del algoritmo. Vice-versa para ejecutar los
+     * experimentos propuestos en el informe.
+     *
+     * @param args En desuso.
+     * @throws Exception En caso de error con el AFD o de I/O de archivos.
+     */
     public static void main(String[] args) throws Exception {
-        //firstTest();
+        //accurracyTest();
         completeTest(false);
     }
+
+    /**
+     * Este metodo estatico ejecuta todas las pruebas expuestas en el informe. Para cargar archivos de sobre 2^23 palabras
+     * se requiere aumentar el heapspace de la maquina virtual de Java al rededor de 4GB.
+     *
+     * @param verbose boolean para verificar comportamiento y tiempos en pantalla. Dejar en falso en pruebas, para evitar sobrecosto.
+     * @throws Exception Por problemas de lectura o con el automata.
+     */
     private static void completeTest(boolean verbose) throws Exception {
         File statisticsFile = new File("./results/automaton_test_results.txt");
         PrintWriter pw = new PrintWriter(statisticsFile);
 
-
+        // Si hay problemas de espacio, eliminar de 2^23 en adelante.
+        // archivos vienen comprimidos, es necesario decomprimirlos
         String[] files = {"source/2^15.txt",
                 "source/2^16.txt",
                 "source/2^17.txt",
@@ -33,38 +49,47 @@ public class AutomatonTextSearchTest {
                 "source/2^24.txt",
         };
 
-        for (String textFile : files){
+        for (String textFile : files) { // por cada archivo
+            // Map almacena resultados de la prueba
             // key: M, value: CONSTRUCTION_TIME, SEARCH_TIME, COUNT
             HashMap<Integer, Triple<Long, Long, Integer>> map = new HashMap<>();
 
+            // Pre-procesamiento
             Preprocess p = new Preprocess(textFile);
             String fullText = p.clean();
             makeAlphabet(fullText.toCharArray(), verbose);
-            System.out.println("n: " + fullText.length() + " = 2^" + Math.log(fullText.length())/Math.log(2));
+            System.out.println("n: " + fullText.length() + " = 2^" + Math.log(fullText.length()) / Math.log(2));
             pw.println("n: " + fullText.length());
+
+            // Muestreo de patrones
             String[] sample = Preprocess.takeSample(fullText, verbose);
+
+            // Preparacion de iteraciones sobre patrones
             int progressCounter = 0;
             int stepCounter = 0;
             int progressLimit = sample.length;
-            long deltaProgress = progressLimit/100;
-            System.out.print("Progress: "+progressCounter);
+            long deltaProgress = progressLimit / 100;
+            System.out.print("Progress: " + progressCounter); // variables para mostrar progreso en pantalla
+            // iteracion sobre patrones
             for (String pattern : sample) {
-                if (pattern.length() < 3) continue;
+                if (pattern.length() < 3) continue; // causan problemas con la creacion del afd por ser chicos
                 stepCounter++;
-                if (stepCounter >= deltaProgress){
+                if (stepCounter >= deltaProgress) { // display de progreso
                     System.out.print(++progressCounter);
                     stepCounter = 0;
                 }
+                // construccion de afd y busqueda
+                // Resultados de tiempo quedan en variables globales M, CONSTRUCTION_TIME Y SEARCH_TIME
                 AutomatonTextSearch ats = new AutomatonTextSearch(fullText, pattern, verbose);
                 ats.run();
 
-                // Agregar resultados parciales a tabla de hash para calcular promedios
-                if (!map.containsKey(M)){
+                // Agregar resultados parciales a tabla de hash
+                if (!map.containsKey(M)) {
                     map.put(M, new Triple<>(
                             CONSTRUCTION_TIME,
                             SEARCH_TIME,
                             1));
-                } else {
+                } else { // se suman y agrega 1 al contador, si se repite m
                     Triple<Long, Long, Integer> previous = map.get(M);
                     map.put(M,
                             new Triple<>(
@@ -74,7 +99,7 @@ public class AutomatonTextSearchTest {
                 }
             }
 
-            // calcular promedios y hacer output de estadisticas
+            // hacer output de estadisticas al archivo de salida
             for (Integer m : map.keySet()) {
                 Triple<Long, Long, Integer> val = map.get(m);
                 pw.println("m: " + m + ", construction_time: " + val.getFirst() + ", search_time: " + val.getSecond() + ", counter: " + val.getThird());
@@ -85,10 +110,15 @@ public class AutomatonTextSearchTest {
             pw.flush();
         }
         pw.close();
-
     }
 
-    public static void firstTest() throws Exception {
+    /**
+     * Metodo ejecuta prueba sobre uno de los archivos, permitiendo comprobar en pantalla que los patrones son buscados
+     * y encontrados en el texto la cantidad correcta de veces.
+     *
+     * @throws Exception Si es que hay problemas con el automata o leyendo el archivo de texto fuente.
+     */
+    public static void accurracyTest() throws Exception {
         Preprocess p = new Preprocess("source/2^21.txt");
         String result = p.clean();
         String[] sample = Preprocess.takeSample(result, true);
@@ -103,14 +133,19 @@ public class AutomatonTextSearchTest {
         }
     }
 
+    /**
+     * Metodo para contar la cantidad de ocurrencias de un patron en un texto. Utilizado para probar efectividad del metodo
+     * con automata
+     *
+     * @param src     Texto fuente que contiene texto sobre el cual buscar.
+     * @param pattern Texto de patron que se quiere buscar.
+     * @return Cantidad de ocurrencias del patron 'pattern' en texto 'src'.
+     */
     private static int realCount(String src, String pattern) {
         int lastIndex = 0;
         int count = 0;
-
         while (lastIndex != -1) {
-
             lastIndex = src.indexOf(pattern, lastIndex);
-
             if (lastIndex != -1) {
                 count++;
                 lastIndex += pattern.length();

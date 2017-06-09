@@ -13,7 +13,7 @@ public class Preprocess {
 
     /**
      * Instancia la clase de pre-procesamiento con el nombre del archivo fuente.
-
+     *
      * @param inFile Archivo de texto fuente.
      * @throws IOException En caso de error de lectura del archivo fuente.
      */
@@ -25,29 +25,31 @@ public class Preprocess {
      * Toma una muestra de N/10 palabras aleatorias (probabilidad uniforme) del string en source.
      *
      * @param source Texto fuente.
-     * @param debug Flag que habilita mensajes de depuracion
+     * @param debug  Flag que habilita mensajes de depuracion
      * @return Arreglo de N/10 palabras muestreadas aleatoriamente.
      */
-    public static String[] takeSample(String source, boolean debug){
+    public static String[] takeSample(String source, boolean debug) {
         String[] wordArray = source.split("\\s+");
         Random rand = new Random();
         int charCounter = source.length();
-        int sampleSize = wordArray.length/10;
+        int sampleSize = wordArray.length / 10;
 
-        double limit = 14400/(charCounter*3e-8); // limite de samples para que se demore a lo mas 4 horas.
-        if (sampleSize > limit){
+        double limit = 14400 / (charCounter * 3e-8); // limite de samples para que se demore a lo mas 4 horas.
+        if (sampleSize > limit) {
             sampleSize = (int) limit;
             System.err.println("takeSample :: Sample size exceded heuristic limit, fixing it to finish in about 4 hours to " + sampleSize);
 
         }
 
         String[] wordSample = new String[sampleSize];
-        for(int i = 0; i < sampleSize; i++){
+        for (int i = 0; i < sampleSize; i++) {
             wordSample[i] = wordArray[rand.nextInt(wordArray.length)];
         }
-        if (debug) System.out.println("takeSample:: sample-words= "+sampleSize+", source-words= "+wordArray.length);
+        if (debug)
+            System.out.println("takeSample:: sample-words= " + sampleSize + ", source-words= " + wordArray.length);
         return wordSample;
     }
+
     /**
      * Ejecuta todos los metodos para limpiar el texto.
      *
@@ -63,6 +65,7 @@ public class Preprocess {
 
     /**
      * DEja el texto sólo mono-espacios. i.e. elimina mutlples espacios consecutivos
+     *
      * @param source Texto fuente.
      * @return Texto procesado.
      */

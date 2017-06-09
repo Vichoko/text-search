@@ -1,6 +1,5 @@
 package utils;
 
-import java.time.Duration;
 import java.util.TreeSet;
 
 public final class Global {
@@ -15,6 +14,13 @@ public final class Global {
     public static long MAKE_ALPHABET_TIME;
     public static int M;
 
+    /**
+     * Metodo necesario para cargar el alfabeto sobre el cual se construira y ejecutara el AFD. Es necesario llamar
+     * a este metodo cada vez que se utiliza un archivo de texto fuente nuevo.
+     *
+     * @param textAsArray Texto fuente como un arreglo de caracteres.
+     * @param verbose     Booleano para mostrar informacion en pantalla.
+     */
     public static void makeAlphabet(char[] textAsArray, boolean verbose) {
         ALPHABET = new TreeSet<>();
         long t0 = System.currentTimeMillis();

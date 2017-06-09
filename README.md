@@ -64,4 +64,5 @@ para ```pattern```, basandose en el alfabeto descubierto de ```fulltext```.
         AutomatonTextSearch ats = new AutomatonTextSearch(result, patterns[0], true); // true for verbose
         System.out.println("AFD found pattern: " + ats.run() + " times.");
 
+Para ver más ejemplos dirigirse a ```src.test``` y leer README de aquel directorio.
 

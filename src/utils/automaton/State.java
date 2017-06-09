@@ -6,16 +6,13 @@ package utils.automaton;
 public class State {
     private int m_intState;
 
-    public int get_state() {
-        return m_intState;
-    }
-
-    private void set_state(int m_state) {
-        this.m_intState = m_state;
-    }
-
+    /**
+     * Estado de un AFD. Simplemente un Integer nativo.
+     *
+     * @param rawState Etiqueta del estado, correspondiente a un int.
+     */
     public State(int rawState) {
-        set_state(rawState);
+        this.m_intState = rawState;
     }
 
     @Override

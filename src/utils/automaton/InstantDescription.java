@@ -7,28 +7,26 @@ public class InstantDescription {
     private State m_state;
     private AFDCharacter m_character;
 
+    /**
+     * Descripcion instantanea de un AFD es un par (Estado, Caracter) que indica:
+     * 1. En que estado estoy.
+     * 2. Que caracter estoy leyendo del input.
+     *
+     * @param s Estado actual.
+     * @param c Caracter actual.
+     */
     public InstantDescription(State s, AFDCharacter c) {
         set_state(s);
         set_character(c);
-    }
-
-    public State get_state() {
-        return m_state;
-    }
-
-    public AFDCharacter get_character() {
-        return m_character;
     }
 
     private void set_state(State m_state) {
         this.m_state = m_state;
     }
 
-
     private void set_character(AFDCharacter m_character) {
         this.m_character = m_character;
     }
-
 
     @Override
     public boolean equals(Object o) {

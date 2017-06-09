@@ -1,13 +1,14 @@
 package test;
 
-
 import utils.automaton.*;
-import utils.automaton.AFDCharacter;
 
 import java.util.ArrayList;
 
+/**
+ * Esta prueba verifica que el simulador de AFD implementado en utils.automaton funciona correctamente.
+ */
 public class AFDTest {
-    public static void main(String[] args){
+    public static void main(String[] args) {
         // simple run
         asserto(a_before_b("ababab"));
         asserto(!a_before_b("ababa"));
@@ -36,13 +37,13 @@ public class AFDTest {
         asserto(count_i_as_then_j_bs("") == 1);
         asserto(count_i_as_then_j_bs("aaaaabbbba") == 10);
         asserto(count_i_as_then_j_bs("ba") == 2);
-        asserto(count_i_as_then_j_bs("bbbb") == 1);
+        asserto(count_i_as_then_j_bs("bbbb") == 5);
     }
 
     /**
      * Acepta si string solo tiene una a'a antes de una b.
      */
-    private static boolean a_before_b(String input){
+    private static boolean a_before_b(String input) {
 
         StateTransitionFunction stf = new StateTransitionFunction();
         stf.set_transition(
@@ -64,7 +65,7 @@ public class AFDTest {
     /**
      * Acepta si no hay una a despues de una b.
      */
-    private static boolean i_as_then_j_bs(String input){
+    private static boolean i_as_then_j_bs(String input) {
 
         StateTransitionFunction stf = new StateTransitionFunction();
         stf.set_transition(
@@ -73,8 +74,8 @@ public class AFDTest {
         stf.set_transition(
                 new InstantDescription(new State(0), new AFDCharacter('b')),
                 new State(1));
-        stf.easy_set_transition(1,'a',2);
-        stf.easy_set_transition(1,'b',1);
+        stf.easy_set_transition(1, 'a', 2);
+        stf.easy_set_transition(1, 'b', 1);
         stf.easy_set_transition(2, 'a', 2);
         stf.easy_set_transition(2, 'b', 2);
 
@@ -91,7 +92,7 @@ public class AFDTest {
     /**
      * Cuenta las ocurrencias de una a antes de una b, cuenta el caso vacio.
      */
-    private static int count_a_before_b(String input){
+    private static int count_a_before_b(String input) {
 
         StateTransitionFunction stf = new StateTransitionFunction();
         stf.set_transition(
@@ -113,7 +114,7 @@ public class AFDTest {
     /**
      * Cuenta cada caracter que cumple condicion a^i*b^j, cuenta el caso vacio
      */
-    private static int count_i_as_then_j_bs(String input){
+    private static int count_i_as_then_j_bs(String input) {
 
         StateTransitionFunction stf = new StateTransitionFunction();
         stf.set_transition(
@@ -122,8 +123,8 @@ public class AFDTest {
         stf.set_transition(
                 new InstantDescription(new State(0), new AFDCharacter('b')),
                 new State(1));
-        stf.easy_set_transition(1,'a',2);
-        stf.easy_set_transition(1,'b',1);
+        stf.easy_set_transition(1, 'a', 2);
+        stf.easy_set_transition(1, 'b', 1);
         stf.easy_set_transition(2, 'a', 2);
         stf.easy_set_transition(2, 'b', 2);
 
@@ -137,8 +138,8 @@ public class AFDTest {
         return afd.run_n_count(input);
     }
 
-    private static void asserto(Boolean result){
-        if (result){
+    private static void asserto(Boolean result) {
+        if (result) {
             System.out.println("    pass.");
             return;
         }

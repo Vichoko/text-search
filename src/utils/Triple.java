@@ -1,5 +1,12 @@
 package utils;
 
+/**
+ * Clase que maneja una 3-tupla de objetos.
+ *
+ * @param <F> Tipo de objeto 1.
+ * @param <S> Tipo de objeto 2.
+ * @param <T> Tipo de objeto 3.
+ */
 public class Triple<F, S, T> {
     private F first; //first member of pair
     private S second; //second member of pair
@@ -18,7 +25,8 @@ public class Triple<F, S, T> {
     public void setSecond(S second) {
         this.second = second;
     }
-    public void setThird(T third){
+
+    public void setThird(T third) {
         this.third = third;
     }
 
@@ -29,7 +37,8 @@ public class Triple<F, S, T> {
     public S getSecond() {
         return second;
     }
-    public T getThird(){
+
+    public T getThird() {
         return third;
     }
 }
