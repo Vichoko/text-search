@@ -11,16 +11,9 @@ import java.util.*;
  */
 public class SuffixArray {
     private int[] suffixArray;
-    String[] suffixStrings;
     private String text;
 
-    public static void main(String[] args) throws FileNotFoundException, UnsupportedEncodingException {
-        String text = getText("Latin-Lipsum.txt");
-        int[] suffixArray = new SuffixArray(text).suffixArray;
-        writeSuffixArray(suffixArray, text);
-    }
-
-    SuffixArray(String text) {
+    public SuffixArray(String text) {
         this.text = text;
         int n_text = text.length();
         // convert text to integers
@@ -31,39 +24,15 @@ public class SuffixArray {
             else text_char.add(text.charAt(i)-'a'+2);
         }
         this.suffixArray = buildSuffixArray(text_char);
-        suffixStrings = new String[suffixArray.length];
-        buildSuffixStrings();
     }
 
-    private static void writeSuffixArray(int[] suffixArray, String text) throws FileNotFoundException, UnsupportedEncodingException {
-        PrintWriter writer = new PrintWriter("suffixArray.txt", "UTF-8");
-        for(int i: suffixArray){
-            writer.print("1. ");
-            writer.println(text.substring(i));
-        }
-        writer.close();
-    }
-
-    private void buildSuffixStrings() {
-        for (int i = 0; i < suffixArray.length; i++) {
-            suffixStrings[i] = text.substring(suffixArray[i]);
-        }
-    }
-
-    private static String getText(String fileName) throws FileNotFoundException {
-        Scanner in = new Scanner(new FileReader(fileName));
-        StringBuilder sb = new StringBuilder();
-        while(in.hasNext()) {
-            sb.append(in.nextLine());
-        }
-        in.close();
-        String read = sb.toString().replaceAll("[^a-zA-Z ]", "").toLowerCase();
-        return read;
+    public int[] getSuffixArray() {
+        return suffixArray;
     }
 
     private int[] buildSuffixArray(ArrayList<Integer> s){
         int n = s.size();
-        for(int i = 3-(n-1)%3+1; i > 0; i--) s.add(0); // special character for padding
+        while(s.get(s.size()-3) != 0) s.add(0); // special character for padding
         // build SA12
         int[] SA12 = getSA12(s);
         // build SA0
@@ -171,11 +140,18 @@ public class SuffixArray {
             for (Triplet t: triplets) {
                 newText.add(t.token_name);
             }
-            int[] SANewText = buildSuffixArray(newText); // TODO: check pointers thing
+            int n1 = (s.size()-1)/3;
+            int n2 = (s.size()-2)/3;
+            int[] SANewText = buildSuffixArray(newText);
             int j = 0;
-            for (int i: SANewText){
-                if (i < SA12.length)
-                    SA12[j++] = triplets.get(i).index;
+            for (int i : SANewText) {
+                // first half
+                if (i < n1 && 1 + 3 * i < 1 + 3 * n1)
+                    SA12[j++] = 1 + 3 * i;
+                // second half
+                else if (i >= n1 && 2 + 3 * (i - n1) < 2 + 3 * n2)
+                    SA12[j++] = 2 + 3 * (i - n1);
+
             }
         }
         return SA12;

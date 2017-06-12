@@ -32,4 +32,25 @@ public final class Global {
         if (verbose) System.out.println("  done makeAlphabet in " + MAKE_ALPHABET_TIME);
     }
 
+    /**
+     * Metodo para contar la cantidad de ocurrencias de un patron en un texto. Utilizado para probar efectividad del metodo
+     * con automata
+     *
+     * @param src     Texto fuente que contiene texto sobre el cual buscar.
+     * @param pattern Texto de patron que se quiere buscar.
+     * @return Cantidad de ocurrencias del patron 'pattern' en texto 'src'.
+     */
+    public static int realCount(String src, String pattern) {
+        int lastIndex = 0;
+        int count = 0;
+        while (lastIndex != -1) {
+            lastIndex = src.indexOf(pattern, lastIndex);
+            if (lastIndex != -1) {
+                count++;
+                lastIndex += pattern.length();
+            }
+        }
+        return count;
+    }
+
 }
