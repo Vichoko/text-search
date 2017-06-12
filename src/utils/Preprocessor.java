@@ -8,7 +8,7 @@ import java.util.Random;
 /**
  *
  */
-public class Preprocess {
+public class Preprocessor {
     private String m_text;
 
     /**
@@ -17,7 +17,7 @@ public class Preprocess {
      * @param inFile Archivo de texto fuente.
      * @throws IOException En caso de error de lectura del archivo fuente.
      */
-    public Preprocess(String inFile) throws IOException {
+    public Preprocessor(String inFile) throws IOException {
         m_text = readFileAsString(inFile);
     }
 

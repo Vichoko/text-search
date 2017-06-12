@@ -1,7 +1,7 @@
 package test;
 
 import algorithms.Automaton.AutomatonTextSearch;
-import utils.Preprocess;
+import utils.Preprocessor;
 import utils.Triple;
 
 import java.io.File;
@@ -55,14 +55,14 @@ public class AutomatonTextSearchTest {
             HashMap<Integer, Triple<Long, Long, Integer>> map = new HashMap<>();
 
             // Pre-procesamiento
-            Preprocess p = new Preprocess(textFile);
+            Preprocessor p = new Preprocessor(textFile);
             String fullText = p.clean();
             makeAlphabet(fullText.toCharArray(), verbose);
             System.out.println("n: " + fullText.length() + " = 2^" + Math.log(fullText.length()) / Math.log(2));
             pw.println("n: " + fullText.length());
 
             // Muestreo de patrones
-            String[] sample = Preprocess.takeSample(fullText, verbose);
+            String[] sample = Preprocessor.takeSample(fullText, verbose);
 
             // Preparacion de iteraciones sobre patrones
             int progressCounter = 0;
@@ -119,9 +119,9 @@ public class AutomatonTextSearchTest {
      * @throws Exception Si es que hay problemas con el automata o leyendo el archivo de texto fuente.
      */
     public static void accurracyTest() throws Exception {
-        Preprocess p = new Preprocess("source/2^21.txt");
+        Preprocessor p = new Preprocessor("source/2^21.txt");
         String result = p.clean();
-        String[] sample = Preprocess.takeSample(result, true);
+        String[] sample = Preprocessor.takeSample(result, true);
 
         for (String pattern : sample) {
             if (pattern.length() < 3) continue;
