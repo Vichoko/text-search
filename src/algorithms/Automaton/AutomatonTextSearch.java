@@ -1,4 +1,4 @@
-package algorithm;
+package algorithms.Automaton;
 
 
 import utils.automaton.*;

@@ -1,3 +1,5 @@
+package algorithms.suffixarray;
+
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.PrintWriter;

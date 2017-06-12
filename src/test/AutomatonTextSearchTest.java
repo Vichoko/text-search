@@ -1,6 +1,6 @@
 package test;
 
-import algorithm.AutomatonTextSearch;
+import algorithms.Automaton.AutomatonTextSearch;
 import utils.Preprocess;
 import utils.Triple;
 

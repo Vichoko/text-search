@@ -1,3 +1,5 @@
+package algorithms.suffixarray;
+
 /**
  * Created by constanzafierro on 11-06-17.
  */
