@@ -3,8 +3,8 @@
 
 
 ### 1. Pre-procesamiento del texto
-Se utilizaran textos de lenguaje natural en ingles. 
-Para lo cual se recibe el archivo de texto de entrada, 
+Se utilizaran textos de lenguaje natural en ingles.
+Para lo cual se recibe el archivo de texto de entrada,
 se hacen las siguientes tareas:
 1. Eliminar saltos de linea.
 2. Eliminar puntuacion.
@@ -19,12 +19,12 @@ Dejando el resultado en un String de salida.
         Preprocess p = new Preprocess("source/2^21.txt");
         String result = p.clean();
 ### 1.1 Muestreo de N/10 palabras
-Utilizando el método estático ```String[] Preprocess.takeSample(String source)``` se obtiene 
+Utilizando el método estático ```String[] Preprocess.takeSample(String source)``` se obtiene
 una muestra de N/10 palabras aleatorias, con distribucion uniforme, del string fuente.
 
 **Observación:** Se debe tomar muestreo después de hacer la limpieza, i.e. correr el método clean.
 
-**Observación 2:** Se impuso un limite heuristico al tamaño de la muestra, tal que ejecutar la busqueda sobre todos 
+**Observación 2:** Se impuso un limite heuristico al tamaño de la muestra, tal que ejecutar la busqueda sobre todos
 ellos no tarde más de 5 horas.
 
 ##### Uso
@@ -40,8 +40,8 @@ ellos no tarde más de 5 horas.
 #### 2.2 Algoritmo con automata
 Implementado en clase ```algorithm.AutomatonTextSearch```.
 
-Se puede ejecutar la clase ```test.AutomatonTextSearchTest``` para visualizar el funcionamiento de éste, y comparar el 
-la correctitud del algoritmo en comparación con el método de fuerza bruta; al igual que para ejecutar los experimentos 
+Se puede ejecutar la clase ```test.AutomatonTextSearchTest``` para visualizar el funcionamiento de éste, y comparar el
+la correctitud del algoritmo en comparación con el método de fuerza bruta; al igual que para ejecutar los experimentos
 propuestos en el informe.
 
 Ejecutar ```AutomatonTextSearchTest.acurracyTest``` para verificar que la busqueda encuentra todas las ocurrencias de diversos
@@ -54,7 +54,7 @@ Ejecutar ```AutomatonTextSearchTest.completeTest``` para efectuar experimentos p
 ##### Uso
 1. Instanciar clase ```AutomatonTextSearch(String fullText, String pattern)```; la cual construye el AFD
 para ```pattern```, basandose en el alfabeto descubierto de ```fulltext```.
-2. Llamar metodo del objeto ```Int AutomatonTextSearch.run()```; el cual retorna la cantidad de ocurrencias de 
+2. Llamar metodo del objeto ```Int AutomatonTextSearch.run()```; el cual retorna la cantidad de ocurrencias de
 ```pattern``` en ```fulltext```.
 
 ##### Ejemplo
@@ -65,4 +65,11 @@ para ```pattern```, basandose en el alfabeto descubierto de ```fulltext```.
         System.out.println("AFD found pattern: " + ats.run() + " times.");
 
 Para ver más ejemplos dirigirse a ```src.test``` y leer README de aquel directorio.
+```
 
+#### 2.2 Arreglo de sufijos
+*algorithm.SuffixArray* construye el automata del archivo que recibe como parámetro del constructor, este se accesa con su getter correspondiente
+
+*test.SuffixArryTest* contiene un main que corre los experimentos para todos los archivos
+
+*algorithm.PatternSearchSA* realiza la busqueda de patrones utilizando el arreglo de sufijo recibido en el constructor.
